@@ -1,0 +1,19 @@
+{
+  "00bdac71-ee21-4e5e-8b6c-d628fa0e6fc8" : {
+    "name" : "Beth Smith",
+    "postalAddress" : "190 Mercer St",
+    "uniqueId" : "00bdac71-ee21-4e5e-8b6c-d628fa0e6fc8"
+  },
+  "17a5ddcb-d8fb-42ca-a026-06e248b558b0" : {
+    "name" : "Andrew Smith",
+    "uniqueId" : "17a5ddcb-d8fb-42ca-a026-06e248b558b0"
+  },
+  "1085336f-8c7e-4af6-b74c-5c82bbd06f69" : {
+    "name" : "John Doe",
+    "postalAddress" : "310 3rd Avenue NY, NY",
+    "phoneNumber" : "2405555123",
+    "emailAddress" : "johndoe@example.com",
+    "note" : "lorem ipsum dolor sit amet",
+    "uniqueId" : "1085336f-8c7e-4af6-b74c-5c82bbd06f69"
+  }
+}
