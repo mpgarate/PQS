@@ -1,0 +1,34 @@
+ Hi Greyjoy, I enjoyed reading your code. Here are a few suggestions:
+ 
+ - Using Junit would help with organizing the tests. That way you wouldn't have 
+ to manually comment in and out lines in order to run individual tests. Also it 
+ will allow you to clear the state of the addressbook between tests, which can 
+ help keep testing consistent. 
+ 
+ - It is preferable to use camelcase names for method and variable names rather
+ than capitalize them. A capitalized first letter usually implies a reference to
+ a class.
+  
+ - AddressBook.addContact will always return 0. No failure case. Might make 
+ sense to return the result of Contacts.add();
+  
+ - In AddressBook.readFromLocalFile(), the exception should be caught as a
+ specific type, probably IOException or some XML parsing exception. A specific
+ message or exception can then be used so the client knows what went wrong. In 
+ general, I think it is a good idea to use exceptions instead of returning
+ error codes.
+
+ - When calling toString() on an empty addressbook, I think it is unexpected to
+ see a sentence as the response. I would probably expect an empty string or 
+ something like "{}". 
+ 
+ - deleteContact() method is not fully implemented. Something should be
+ documented about deletion. 
+ 
+ - The contact PhoneNumber setter parameter would be more appropriate as a
+ String, since it may or may include some of these characters '+*#N.,-()/ ;'.
+ This conversion of long to String should be documented, since if the client 
+ uses a long to create a phone number the client would probably expect a long
+ from the Contact getter (but instead they get a String).
+ 
+ 
