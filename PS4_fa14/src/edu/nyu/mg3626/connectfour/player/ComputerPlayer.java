@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import edu.nyu.mg3626.connectfour.IllegalMoveException;
-import edu.nyu.mg3626.connectfour.model.ConnectFourBoard;
 import edu.nyu.mg3626.connectfour.model.ConnectFourModel;
-import edu.nyu.mg3626.connectfour.model.MatrixBoard;
 import edu.nyu.mg3626.connectfour.model.Piece;
+import edu.nyu.mg3626.connectfour.model.board.ConnectFourBoard;
+import edu.nyu.mg3626.connectfour.model.board.MatrixBoardBuilder;
 
 public class ComputerPlayer extends Player {
 
@@ -23,8 +23,8 @@ public class ComputerPlayer extends Player {
    * 
    * @param model
    *          the game model from which the move should be predicted.
-   * @return the column index for the winning move, a random move, or -1 for
-   *         invalid input
+   * @return the column index for the winning move, a random move, or -1 for no
+   *         moves possible for the given input.
    */
   public int getNextMove(ConnectFourModel model) {
 
@@ -34,11 +34,7 @@ public class ComputerPlayer extends Player {
     List<Integer> legalMovesThatDoNotWin = new ArrayList<Integer>();
 
     ConnectFourBoard board;
-    try {
-      board = new MatrixBoard(moveHistory);
-    } catch (IllegalMoveException e) {
-      return -1;
-    }
+    board = new MatrixBoardBuilder().withMoveHistory(moveHistory).build();
 
     if (board.gameIsOver()) {
       return -1;
@@ -46,10 +42,11 @@ public class ComputerPlayer extends Player {
 
     for (int i = 0; i < numberOfColumns; i++) {
 
+      board = new MatrixBoardBuilder().withMoveHistory(moveHistory).build();
+
       try {
-        board = new MatrixBoard(moveHistory);
         board.addPiece(this, i);
-      } catch (IllegalMoveException ignoredException) {
+      } catch (IllegalMoveException illegalMoveException) {
         continue;
       }
 
@@ -58,10 +55,6 @@ public class ComputerPlayer extends Player {
       } else {
         legalMovesThatDoNotWin.add(i);
       }
-    }
-
-    if (legalMovesThatDoNotWin.isEmpty()) {
-      return -1;
     }
 
     Collections.shuffle(legalMovesThatDoNotWin);

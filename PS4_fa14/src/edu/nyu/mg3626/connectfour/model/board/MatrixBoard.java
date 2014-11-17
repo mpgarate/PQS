@@ -1,11 +1,11 @@
-package edu.nyu.mg3626.connectfour.model;
+package edu.nyu.mg3626.connectfour.model.board;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.nyu.mg3626.connectfour.GameConstants;
 import edu.nyu.mg3626.connectfour.IllegalMoveException;
+import edu.nyu.mg3626.connectfour.model.Piece;
 import edu.nyu.mg3626.connectfour.player.Player;
 
 public class MatrixBoard implements ConnectFourBoard {
@@ -20,33 +20,33 @@ public class MatrixBoard implements ConnectFourBoard {
   private Player winner;
   private boolean gameIsStarted = false;
 
-  // TODO: use builder pattern
+  protected MatrixBoard(MatrixBoardBuilder builder) {
+    this.numberOfColumns = builder.getNumberOfColumns();
+    this.numberOfRows = builder.getNumberOfRows();
+    this.victoryConnectionSize = builder.getVictoryConnectionSize();
 
-  public MatrixBoard() {
-    this(GameConstants.NUM_COLUMNS, GameConstants.NUM_ROWS,
-        GameConstants.VICTORY_CONNECTION_SIZE);
+    List<Piece> moveHistoryToLoad = builder.getMoveHistory();
+
+    clearAndInitializeGameBoard();
+
+    loadMoveHistory(moveHistoryToLoad);
   }
 
-  // TODO: some constructions are impossible, such as using a custom board size
-  // in the board used to generate the piecesList
-  public MatrixBoard(List<Piece> piecesList) throws IllegalMoveException {
-    this();
-
-    for (Piece piece : piecesList) {
-      addPiece(piece.getPlayer(), piece.getColumnIndex());
-    }
-  }
-
-  public MatrixBoard(int numberOfColumns, int numberOfRows,
-      int victoryConnectionSize) {
-    this.numberOfColumns = numberOfColumns;
-    this.numberOfRows = numberOfRows;
-    this.victoryConnectionSize = victoryConnectionSize;
-
+  private void clearAndInitializeGameBoard() {
     pieces = new Piece[numberOfRows][numberOfColumns];
-    moveHistory = new LinkedList<Piece>();
+    this.moveHistory = new LinkedList<Piece>();
     winner = null;
     gameIsStarted = true;
+  }
+
+  private void loadMoveHistory(List<Piece> moveHistory) {
+    try {
+      for (Piece piece : moveHistory) {
+        addPiece(piece.getPlayer(), piece.getColumnIndex());
+      }
+    } catch (IllegalMoveException | IllegalArgumentException e) {
+      clearAndInitializeGameBoard();
+    }
   }
 
   /**
@@ -59,13 +59,17 @@ public class MatrixBoard implements ConnectFourBoard {
    * @return the index of the free space in the column or -1 if none found
    */
   private int findIndexOfNextEmptySpaceInColumn(int columnIndex) {
+
+    int nextEmptySpace = -1;
+
     for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       if (pieces[rowIndex][columnIndex] == null) {
-        return rowIndex;
+        nextEmptySpace = rowIndex;
+        break;
       }
     }
 
-    return -1;
+    return nextEmptySpace;
   }
 
   public Piece addPiece(Player player, int columnIndex)
@@ -209,19 +213,22 @@ public class MatrixBoard implements ConnectFourBoard {
   public String toString() {
     StringBuilder sb = new StringBuilder();
 
-    for (int i = pieces.length - 1; i >= 0; i--) {
-      for (int j = 0; j < pieces[i].length; j++) {
-        Piece piece = pieces[i][j];
-        sb.append(i + ", " + j + " : ");
-        if (null == piece) {
-          sb.append("null, ");
-        } else {
-          sb.append(piece.getPlayer());
-          sb.append(", ");
-        }
-      }
-      sb.append("\n");
+    String gameState = gameIsStarted ? "Ongoing game" : "No active game";
+
+    String boardWinner;
+
+    if (null == winner) {
+      boardWinner = "No winner";
+    } else {
+      boardWinner = "Winner is " + winner.getName();
     }
+
+    String moveCount = moveHistory.size() + " moves made. ";
+
+    sb.append("MatrixBoard: ");
+    sb.append(gameState + " | ");
+    sb.append(boardWinner + " | ");
+    sb.append(moveCount);
 
     return sb.toString();
   }

@@ -2,15 +2,24 @@ package edu.nyu.mg3626.connectfour;
 
 import edu.nyu.mg3626.connectfour.model.ConnectFourGame;
 import edu.nyu.mg3626.connectfour.model.ConnectFourModel;
-import edu.nyu.mg3626.connectfour.view.ConnectFourSwingGui;
+import edu.nyu.mg3626.connectfour.view.GameSwingGui;
 
 public class ConnectFourApp {
+  private static final ConnectFourApp INSTANCE = new ConnectFourApp();
+
+  private ConnectFourApp() {
+  }
+
+  public static ConnectFourApp getInstance() {
+    return INSTANCE;
+  }
+
   private void go() {
     ConnectFourModel model = new ConnectFourGame();
-    ConnectFourSwingGui view = new ConnectFourSwingGui(model);
+    GameSwingGui view = new GameSwingGui(model);
   }
 
   public static void main(String[] args) {
-    new ConnectFourApp().go();
+    ConnectFourApp.getInstance().go();
   }
 }

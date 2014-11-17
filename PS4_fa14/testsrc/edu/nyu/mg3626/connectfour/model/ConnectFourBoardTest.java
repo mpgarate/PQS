@@ -6,19 +6,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
 
 import edu.nyu.mg3626.connectfour.GameConstants;
 import edu.nyu.mg3626.connectfour.IllegalMoveException;
+import edu.nyu.mg3626.connectfour.model.board.ConnectFourBoard;
+import edu.nyu.mg3626.connectfour.model.board.MatrixBoardBuilder;
 import edu.nyu.mg3626.connectfour.util.TestUtil;
 
 public class ConnectFourBoardTest {
 
   @Test(expected = IllegalMoveException.class)
   public void testAddPiece_fillAColumn() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
     for (int i = 0; i < GameConstants.NUM_ROWS; i++) {
       board.addPiece(RED_PLAYER, 1);
       board.addPiece(YELLOW_PLAYER, 1);
@@ -27,25 +30,25 @@ public class ConnectFourBoardTest {
 
   @Test(expected = IllegalMoveException.class)
   public void testAddPiece_tooHighColumn() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
     board.addPiece(RED_PLAYER, 9999);
   }
 
   @Test(expected = IllegalMoveException.class)
   public void testAddPiece_tooLowColumn() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
     board.addPiece(RED_PLAYER, -1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAddPiece_nullColor() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
     board.addPiece(null, 1);
   }
 
   @Test
   public void testAddPiece_verticalWin() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     board.addPiece(RED_PLAYER, 3);
     board.addPiece(YELLOW_PLAYER, 4);
@@ -61,7 +64,7 @@ public class ConnectFourBoardTest {
 
   @Test
   public void testAddPiece_horizontalWin() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     board.addPiece(YELLOW_PLAYER, 0);
     board.addPiece(RED_PLAYER, 0);
@@ -78,7 +81,7 @@ public class ConnectFourBoardTest {
   @Test
   public void testAddPiece_horizontalWinColTreeThroughSix()
       throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
     board.addPiece(YELLOW_PLAYER, 3);
     board.addPiece(RED_PLAYER, 3);
     board.addPiece(YELLOW_PLAYER, 4);
@@ -94,7 +97,7 @@ public class ConnectFourBoardTest {
   @Test
   public void testAddPiece_diagonalSouthWestToNorthEastWin()
       throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     board.addPiece(YELLOW_PLAYER, 0);
     board.addPiece(RED_PLAYER, 1);
@@ -117,7 +120,7 @@ public class ConnectFourBoardTest {
   @Test
   public void testAddPiece_diagonalNorthWestToSouthEastWin()
       throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     board.addPiece(YELLOW_PLAYER, 5);
     board.addPiece(RED_PLAYER, 4);
@@ -140,7 +143,7 @@ public class ConnectFourBoardTest {
   @Test(expected = IllegalMoveException.class)
   public void addPiece_afterGameOverThrowsException()
       throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     board.addPiece(RED_PLAYER, 0);
     board.addPiece(YELLOW_PLAYER, 1);
@@ -158,7 +161,7 @@ public class ConnectFourBoardTest {
 
   @Test
   public void addPiece_forFullBoardIsATie() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     for (Piece piece : TestUtil.getMovesForFullAndTiedGame()) {
       board.addPiece(piece.getPlayer(), piece.getColumnIndex());
@@ -171,7 +174,7 @@ public class ConnectFourBoardTest {
   @Test
   public void addPiece_forFailingCaseIncorrectBoardIsFullDetected()
       throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     int[] redMoves = { 1, 4, 5, 1, 3, 5, 0, 1, 6, 6, 1, 0, 2 };
     int[] yellowMoves = { 0, 3, 6, 0, 4, 6, 3, 5, 0, 1, 6, 6, 0, 1 };
@@ -188,7 +191,7 @@ public class ConnectFourBoardTest {
   @Test
   public void addPiece_recognizesDiagonalSWToNEFromRightEdge()
       throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     int[] redMoves = { 6, 5, 4, 6, 5, 2 };
     int[] yellowMoves = { 6, 5, 5, 3, 4, 6 };
@@ -204,13 +207,13 @@ public class ConnectFourBoardTest {
 
   @Test
   public void testGameIsOver_canBeFalse() {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
     assertFalse(board.gameIsOver());
   }
 
   @Test
   public void testGetPieceHistory() throws IllegalMoveException {
-    ConnectFourBoard board = new MatrixBoard();
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
 
     board.addPiece(RED_PLAYER, 0);
     board.addPiece(YELLOW_PLAYER, 4);
@@ -231,4 +234,49 @@ public class ConnectFourBoardTest {
     assertEquals(YELLOW_PLAYER, moveHistory.get(3).getPlayer());
     assertTrue(1 == moveHistory.get(3).getColumnIndex());
   }
+
+  @Test
+  public void testConstructBoard_withListOfInvalidMovesProducesEmptyBoard() {
+    List<Piece> moveHistory = new LinkedList<Piece>();
+
+    moveHistory.add(new Piece(RED_PLAYER, 0, 99));
+
+    ConnectFourBoard board =
+        new MatrixBoardBuilder().withMoveHistory(moveHistory).build();
+
+    assertEquals(0, board.getMoveHistory().size());
+  }
+
+  @Test
+  public void testToString_ongoingGame() throws IllegalMoveException {
+    List<Piece> moveHistory = new LinkedList<Piece>();
+
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
+
+    board.addPiece(RED_PLAYER, 1);
+
+    String expectedString =
+        "MatrixBoard: Ongoing game | No winner | 1 moves made. ";
+    assertEquals(expectedString, board.toString());
+  }
+
+  @Test
+  public void testToString_gameOver() throws IllegalMoveException {
+    List<Piece> moveHistory = new LinkedList<Piece>();
+
+    ConnectFourBoard board = new MatrixBoardBuilder().build();
+
+    board.addPiece(RED_PLAYER, 1);
+    board.addPiece(YELLOW_PLAYER, 2);
+    board.addPiece(RED_PLAYER, 1);
+    board.addPiece(YELLOW_PLAYER, 2);
+    board.addPiece(RED_PLAYER, 1);
+    board.addPiece(YELLOW_PLAYER, 2);
+    board.addPiece(RED_PLAYER, 1);
+
+    String expectedString =
+        "MatrixBoard: No active game | Winner is Red | 7 moves made. ";
+    assertEquals(expectedString, board.toString());
+  }
+
 }

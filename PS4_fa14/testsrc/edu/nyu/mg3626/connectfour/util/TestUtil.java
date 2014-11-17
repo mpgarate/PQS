@@ -42,20 +42,6 @@ public final class TestUtil {
       movesToMake.add(piece);
     }
 
-    /*
-     * for (int j = 0; j < GameConstants.NUM_COLUMNS; j++) { if
-     * (columnsOfPlayerStart == 3) { previousPlayer =
-     * previousPlayer.equals(RED_PLAYER) ? YELLOW_PLAYER : RED_PLAYER;
-     * columnsOfPlayerStart = 0; } else { columnsOfPlayerStart++; }
-     * 
-     * for (int i = 0; i < GameConstants.NUM_ROWS; i++) { Player player =
-     * previousPlayer.equals(RED_PLAYER) ? YELLOW_PLAYER : RED_PLAYER;
-     * 
-     * previousPlayer = player;
-     * 
-     * movesToMake.add(new Piece(player, 0, j)); } }
-     */
-
     return movesToMake;
   }
 }

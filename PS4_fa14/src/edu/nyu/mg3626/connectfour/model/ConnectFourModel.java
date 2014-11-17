@@ -2,9 +2,9 @@ package edu.nyu.mg3626.connectfour.model;
 
 import java.util.List;
 
-import edu.nyu.mg3626.connectfour.ConnectFourListener;
 import edu.nyu.mg3626.connectfour.IllegalMoveException;
 import edu.nyu.mg3626.connectfour.player.Player;
+import edu.nyu.mg3626.connectfour.view.ConnectFourListener;
 
 public interface ConnectFourModel {
 
@@ -16,6 +16,17 @@ public interface ConnectFourModel {
    */
   public void addConnectFourListener(ConnectFourListener listener);
 
+  /**
+   * Add a piece to the game. Players alternate turns, and this alternation is
+   * handled internally. The user of this method is responsible for adding
+   * pieces in the desired order.
+   * 
+   * @param columnIndex
+   *          the column in which to place a piece
+   * @throws IllegalMoveException
+   *           if the column is full or out of bounds, or if the game is not
+   *           started.
+   */
   public void addPiece(int columnIndex) throws IllegalMoveException;
 
   /**
@@ -53,4 +64,11 @@ public interface ConnectFourModel {
    * @return true if the game is over, false if the game is ongoing.
    */
   public boolean gameIsOver();
+
+  /**
+   * Get the number of connected pieces required for winning a game.
+   * 
+   * @return
+   */
+  public int getVictoryConnectionSize();
 }

@@ -1,8 +1,9 @@
-package edu.nyu.mg3626.connectfour.model;
+package edu.nyu.mg3626.connectfour.model.board;
 
 import java.util.List;
 
 import edu.nyu.mg3626.connectfour.IllegalMoveException;
+import edu.nyu.mg3626.connectfour.model.Piece;
 import edu.nyu.mg3626.connectfour.player.Player;
 
 public interface ConnectFourBoard {

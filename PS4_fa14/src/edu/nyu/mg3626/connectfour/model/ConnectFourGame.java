@@ -3,10 +3,12 @@ package edu.nyu.mg3626.connectfour.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nyu.mg3626.connectfour.ConnectFourListener;
 import edu.nyu.mg3626.connectfour.GameConstants;
 import edu.nyu.mg3626.connectfour.IllegalMoveException;
+import edu.nyu.mg3626.connectfour.model.board.ConnectFourBoard;
+import edu.nyu.mg3626.connectfour.model.board.MatrixBoardBuilder;
 import edu.nyu.mg3626.connectfour.player.Player;
+import edu.nyu.mg3626.connectfour.view.ConnectFourListener;
 
 public class ConnectFourGame implements ConnectFourModel {
   private final int numberOfColumns;
@@ -27,7 +29,7 @@ public class ConnectFourGame implements ConnectFourModel {
         GameConstants.VICTORY_CONNECTION_SIZE);
   }
 
-  public ConnectFourGame(int numberOfColumns, int numberOfRows,
+  private ConnectFourGame(int numberOfColumns, int numberOfRows,
       int victoryConnectionSize) {
     this.numberOfColumns = numberOfColumns;
     this.numberOfRows = numberOfRows;
@@ -45,8 +47,7 @@ public class ConnectFourGame implements ConnectFourModel {
     // player 1 starts
     currentTurnPlayer = player1;
 
-    board =
-        new MatrixBoard(numberOfColumns, numberOfRows, victoryConnectionSize);
+    board = new MatrixBoardBuilder().build();
 
     fireGameStartedEvent();
   }
@@ -113,7 +114,7 @@ public class ConnectFourGame implements ConnectFourModel {
    * {@inheritDoc}
    */
   public boolean gameIsOver() {
-    return null != board && board.gameIsOver();
+    return null == board || board.gameIsOver();
   }
 
   private void fireGameStartedEvent() {
@@ -138,6 +139,11 @@ public class ConnectFourGame implements ConnectFourModel {
     for (ConnectFourListener listener : listeners) {
       listener.pieceAdded(piece);
     }
+  }
+
+  @Override
+  public int getVictoryConnectionSize() {
+    return victoryConnectionSize;
   }
 
   public String toString() {

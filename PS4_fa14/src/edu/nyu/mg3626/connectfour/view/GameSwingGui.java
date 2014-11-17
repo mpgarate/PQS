@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import edu.nyu.mg3626.connectfour.ConnectFourListener;
 import edu.nyu.mg3626.connectfour.IllegalMoveException;
 import edu.nyu.mg3626.connectfour.model.ConnectFourModel;
 import edu.nyu.mg3626.connectfour.model.Piece;
@@ -18,7 +17,7 @@ import edu.nyu.mg3626.connectfour.player.ComputerPlayer;
 import edu.nyu.mg3626.connectfour.player.HumanPlayer;
 import edu.nyu.mg3626.connectfour.player.Player;
 
-public class ConnectFourSwingGui implements ConnectFourListener {
+public class GameSwingGui implements ConnectFourListener {
 
   private JFrame frame = new JFrame();
   private ConnectFourModel model;
@@ -30,7 +29,7 @@ public class ConnectFourSwingGui implements ConnectFourListener {
 
   private ComputerPlayer computerPlayer;
 
-  public ConnectFourSwingGui(ConnectFourModel model) {
+  public GameSwingGui(ConnectFourModel model) {
     this.model = model;
     model.addConnectFourListener(this);
 
