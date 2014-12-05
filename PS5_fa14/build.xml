@@ -1,0 +1,30 @@
+<!-- Made using Apache Ant guide: http://ant.apache.org/manual/using.html -->
+<project name="MyProject" default="compile" basedir=".">
+  <description>
+    Multi-window canvas app where users can paint on a canvas using the mouse.  
+  </description>
+
+  <property name="src" location="src"/>
+  <property name="teststc" location="testsrc"/>
+  <property name="build" location="build"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
