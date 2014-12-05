@@ -2,6 +2,13 @@ package edu.nyu.mg3626.connectfour.view.logger;
 
 import edu.nyu.mg3626.connectfour.model.Piece;
 
+/**
+ * Log events of a single Connect Four game. Events are cleared upon receipt of
+ * the gameStarted() event.
+ * 
+ * @author mg3626
+ *
+ */
 public class SingleGameLogger implements GameLogger {
 
   SingleGameLogger() {

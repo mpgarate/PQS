@@ -6,6 +6,12 @@ import edu.nyu.mg3626.connectfour.IllegalMoveException;
 import edu.nyu.mg3626.connectfour.model.Piece;
 import edu.nyu.mg3626.connectfour.player.Player;
 
+/**
+ * Contract for a connect four board.
+ * 
+ * @author mg3626
+ *
+ */
 public interface ConnectFourBoard {
 
   Piece addPiece(Player player, int columnIndex) throws IllegalMoveException;

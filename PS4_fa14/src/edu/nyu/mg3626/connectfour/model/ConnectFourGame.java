@@ -10,6 +10,13 @@ import edu.nyu.mg3626.connectfour.model.board.MatrixBoardBuilder;
 import edu.nyu.mg3626.connectfour.player.Player;
 import edu.nyu.mg3626.connectfour.view.ConnectFourListener;
 
+/**
+ * Manages the connect four game state and firing of events to the
+ * ConnectFourListeners.
+ * 
+ * @author mg3626
+ *
+ */
 public class ConnectFourGame implements ConnectFourModel {
   private final int numberOfColumns;
   private final int numberOfRows;
@@ -24,6 +31,9 @@ public class ConnectFourGame implements ConnectFourModel {
   private List<ConnectFourListener> listeners =
       new ArrayList<ConnectFourListener>();
 
+  /**
+   * Constructs an empty game with values from the GameConstatnts class.
+   */
   public ConnectFourGame() {
     this(GameConstants.NUM_COLUMNS, GameConstants.NUM_ROWS,
         GameConstants.VICTORY_CONNECTION_SIZE);
@@ -36,10 +46,10 @@ public class ConnectFourGame implements ConnectFourModel {
     this.victoryConnectionSize = victoryConnectionSize;
   }
 
-  @Override
   /**
    * {@inheritDoc}
    */
+  @Override
   public void startNewGame(Player player1, Player player2) {
     this.player1 = player1;
     this.player2 = player2;
@@ -52,10 +62,13 @@ public class ConnectFourGame implements ConnectFourModel {
     fireGameStartedEvent();
   }
 
-  @Override
   /**
    * {@inheritDoc}
+   * 
+   * throws IllegalMoveException when impossible to play the attempted move
    */
+
+  @Override
   public void addPiece(int columnIndex) throws IllegalMoveException {
 
     Player player = currentTurnPlayer;
@@ -77,44 +90,56 @@ public class ConnectFourGame implements ConnectFourModel {
     }
   }
 
-  @Override
+  public String toString() {
+    return board.toString();
+  }
+
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<Piece> getMoveHistory() {
     return board.getMoveHistory();
   }
 
-  @Override
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addConnectFourListener(ConnectFourListener listener) {
     listeners.add(listener);
   }
 
-  @Override
   /**
    * {@inheritDoc}
    */
+  @Override
   public int getNumberOfColumns() {
     return numberOfColumns;
   }
 
-  @Override
   /**
    * {@inheritDoc}
    */
+  @Override
   public int getNumberOfRows() {
     return numberOfRows;
   }
 
-  @Override
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean gameIsOver() {
     return null == board || board.gameIsOver();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getVictoryConnectionSize() {
+    return victoryConnectionSize;
   }
 
   private void fireGameStartedEvent() {
@@ -141,12 +166,4 @@ public class ConnectFourGame implements ConnectFourModel {
     }
   }
 
-  @Override
-  public int getVictoryConnectionSize() {
-    return victoryConnectionSize;
-  }
-
-  public String toString() {
-    return board.toString();
-  }
 }

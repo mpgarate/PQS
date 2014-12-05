@@ -8,6 +8,13 @@ import edu.nyu.mg3626.connectfour.IllegalMoveException;
 import edu.nyu.mg3626.connectfour.model.Piece;
 import edu.nyu.mg3626.connectfour.player.Player;
 
+/**
+ * 
+ * ConnectFourBoard implementation based on an array of arrays of pieces.
+ * 
+ * @author mg3626
+ *
+ */
 public class MatrixBoard implements ConnectFourBoard {
   private final int numberOfColumns;
   private final int numberOfRows;
@@ -20,7 +27,13 @@ public class MatrixBoard implements ConnectFourBoard {
   private Player winner;
   private boolean gameIsStarted = false;
 
-  protected MatrixBoard(MatrixBoardBuilder builder) {
+  /**
+   * Construct a MatrixBoard with parameters supplied with a MatrixBoardBuilder.
+   * 
+   * @param builder
+   *          the builder
+   */
+  MatrixBoard(MatrixBoardBuilder builder) {
     this.numberOfColumns = builder.getNumberOfColumns();
     this.numberOfRows = builder.getNumberOfRows();
     this.victoryConnectionSize = builder.getVictoryConnectionSize();
@@ -32,46 +45,13 @@ public class MatrixBoard implements ConnectFourBoard {
     loadMoveHistory(moveHistoryToLoad);
   }
 
-  private void clearAndInitializeGameBoard() {
-    pieces = new Piece[numberOfRows][numberOfColumns];
-    this.moveHistory = new LinkedList<Piece>();
-    winner = null;
-    gameIsStarted = true;
-  }
-
-  private void loadMoveHistory(List<Piece> moveHistory) {
-    try {
-      for (Piece piece : moveHistory) {
-        addPiece(piece.getPlayer(), piece.getColumnIndex());
-      }
-    } catch (IllegalMoveException | IllegalArgumentException e) {
-      clearAndInitializeGameBoard();
-    }
-  }
-
   /**
+   * {@inheritDoc}
    * 
-   * Get the index of the next empty space for a given column. Returns when
-   * column is full.
-   * 
-   * @param column
-   *          the column to check
-   * @return the index of the free space in the column or -1 if none found
+   * After adding a piece, the board is checked for a winnning streak resulting
+   * from the piece.
    */
-  private int findIndexOfNextEmptySpaceInColumn(int columnIndex) {
-
-    int nextEmptySpace = -1;
-
-    for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
-      if (pieces[rowIndex][columnIndex] == null) {
-        nextEmptySpace = rowIndex;
-        break;
-      }
-    }
-
-    return nextEmptySpace;
-  }
-
+  @Override
   public Piece addPiece(Player player, int columnIndex)
       throws IllegalMoveException {
 
@@ -102,6 +82,99 @@ public class MatrixBoard implements ConnectFourBoard {
     }
 
     return piece;
+  }
+
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    String gameState = gameIsStarted ? "Ongoing game" : "No active game";
+
+    String boardWinner;
+
+    if (null == winner) {
+      boardWinner = "No winner";
+    } else {
+      boardWinner = "Winner is " + winner.getName();
+    }
+
+    String moveCount = moveHistory.size() + " moves made. ";
+
+    sb.append("MatrixBoard: ");
+    sb.append(gameState + " | ");
+    sb.append(boardWinner + " | ");
+    sb.append(moveCount);
+
+    return sb.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean gameIsOver() {
+    return !gameIsStarted;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Player getWinner() {
+    return winner;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public List<Piece> getMoveHistory() {
+    List<Piece> piecesList = new ArrayList<Piece>(moveHistory.size());
+
+    for (Piece piece : moveHistory) {
+      piecesList.add(piece);
+    }
+
+    return piecesList;
+  }
+
+  private void clearAndInitializeGameBoard() {
+    pieces = new Piece[numberOfRows][numberOfColumns];
+    this.moveHistory = new LinkedList<Piece>();
+    winner = null;
+    gameIsStarted = true;
+  }
+
+  private void loadMoveHistory(List<Piece> moveHistory) {
+    try {
+      for (Piece piece : moveHistory) {
+        addPiece(piece.getPlayer(), piece.getColumnIndex());
+      }
+    } catch (IllegalMoveException e) {
+      clearAndInitializeGameBoard();
+    }
+  }
+
+  /**
+   * 
+   * Get the index of the next empty space for a given column. Returns when
+   * column is full.
+   * 
+   * @param column
+   *          the column to check
+   * @return the index of the free space in the column or -1 if none found
+   */
+  private int findIndexOfNextEmptySpaceInColumn(int columnIndex) {
+
+    int nextEmptySpace = -1;
+
+    for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
+      if (pieces[rowIndex][columnIndex] == null) {
+        nextEmptySpace = rowIndex;
+        break;
+      }
+    }
+
+    return nextEmptySpace;
   }
 
   private boolean gameIsOverFor(Piece piece) {
@@ -210,47 +283,4 @@ public class MatrixBoard implements ConnectFourBoard {
     return false;
   }
 
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-
-    String gameState = gameIsStarted ? "Ongoing game" : "No active game";
-
-    String boardWinner;
-
-    if (null == winner) {
-      boardWinner = "No winner";
-    } else {
-      boardWinner = "Winner is " + winner.getName();
-    }
-
-    String moveCount = moveHistory.size() + " moves made. ";
-
-    sb.append("MatrixBoard: ");
-    sb.append(gameState + " | ");
-    sb.append(boardWinner + " | ");
-    sb.append(moveCount);
-
-    return sb.toString();
-  }
-
-  @Override
-  public boolean gameIsOver() {
-    return !gameIsStarted;
-  }
-
-  @Override
-  public Player getWinner() {
-    return winner;
-  }
-
-  @Override
-  public List<Piece> getMoveHistory() {
-    List<Piece> piecesList = new ArrayList<Piece>(moveHistory.size());
-
-    for (Piece piece : moveHistory) {
-      piecesList.add(piece);
-    }
-
-    return piecesList;
-  }
 }

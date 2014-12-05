@@ -6,6 +6,11 @@ import edu.nyu.mg3626.connectfour.IllegalMoveException;
 import edu.nyu.mg3626.connectfour.player.Player;
 import edu.nyu.mg3626.connectfour.view.ConnectFourListener;
 
+/**
+ * Contract for the classes behaving as the model for a connect four game.
+ * 
+ * @author mg3626
+ */
 public interface ConnectFourModel {
 
   /**
@@ -30,10 +35,12 @@ public interface ConnectFourModel {
   public void addPiece(int columnIndex) throws IllegalMoveException;
 
   /**
-   * Start a new game.
+   * Start a new game. Player 1 will move first.
    * 
    * @param player1
+   *          the player to make the first move
    * @param player2
+   *          the player to make the second move
    */
   public void startNewGame(Player player1, Player player2);
 

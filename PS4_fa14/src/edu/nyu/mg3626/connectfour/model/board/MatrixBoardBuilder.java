@@ -25,6 +25,9 @@ public class MatrixBoardBuilder {
   private final int victoryConnectionSize =
       GameConstants.VICTORY_CONNECTION_SIZE;
 
+  /**
+   * Construct this builder.
+   */
   public MatrixBoardBuilder() {
 
   }
@@ -43,6 +46,11 @@ public class MatrixBoardBuilder {
     return this;
   }
 
+  /**
+   * Build the MatrixBoard instance
+   * 
+   * @return the MatrixBoard instance
+   */
   public MatrixBoard build() {
     MatrixBoard board = new MatrixBoard(this);
     return board;

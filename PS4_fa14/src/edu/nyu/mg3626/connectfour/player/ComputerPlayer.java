@@ -11,8 +11,22 @@ import edu.nyu.mg3626.connectfour.model.Piece;
 import edu.nyu.mg3626.connectfour.model.board.ConnectFourBoard;
 import edu.nyu.mg3626.connectfour.model.board.MatrixBoardBuilder;
 
+/**
+ * A player capable of selecting a move to play.
+ * 
+ * @author mg3626
+ *
+ */
 public class ComputerPlayer extends Player {
 
+  /**
+   * Construct a computer player. All fields are required.
+   * 
+   * @param name
+   *          the player name
+   * @param color
+   *          the player color
+   */
   public ComputerPlayer(String name, Color color) {
     super(name, color);
   }

@@ -17,6 +17,12 @@ import edu.nyu.mg3626.connectfour.player.ComputerPlayer;
 import edu.nyu.mg3626.connectfour.player.HumanPlayer;
 import edu.nyu.mg3626.connectfour.player.Player;
 
+/**
+ * The GUI view for the Connect Four game implemented using Swing.
+ * 
+ * @author mg3626
+ *
+ */
 public class GameSwingGui implements ConnectFourListener {
 
   private JFrame frame = new JFrame();
@@ -29,6 +35,12 @@ public class GameSwingGui implements ConnectFourListener {
 
   private ComputerPlayer computerPlayer;
 
+  /**
+   * Construct the game GUI.
+   * 
+   * @param model
+   *          the ConnectFourModel to use for representing the game
+   */
   public GameSwingGui(ConnectFourModel model) {
     this.model = model;
     model.addConnectFourListener(this);
@@ -58,7 +70,6 @@ public class GameSwingGui implements ConnectFourListener {
     model.startNewGame(player1, player2);
   }
 
-  // TODO: randomize whether human or computer starts
   private void newGameVersusComputer() {
     Player humanPlayer = new HumanPlayer("Red", Color.RED);
 
@@ -154,11 +165,20 @@ public class GameSwingGui implements ConnectFourListener {
     pieceButtonMatrix[rowIndex][columnIndex].setBackground(pieceColor);
   }
 
+  /**
+   * {@inheritDoc} Clears the board for a new game.
+   */
   @Override
   public void gameStarted() {
     emptyPiecesPanel();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * Displays the piece in the GUI and if playing against computer, triggers the
+   * computer's move.
+   */
   @Override
   public void pieceAdded(Piece piece) {
     displayPiece(piece);
@@ -169,12 +189,20 @@ public class GameSwingGui implements ConnectFourListener {
     }
   }
 
+  /**
+   * {@inheritDoc} Prompts the user with message and to begin a new game or
+   * exit.
+   */
   @Override
   public void gameWon(Piece piece) {
     displayPiece(piece);
     promptForNewGameOrExit("Game won by " + piece.getPlayer() + ".");
   }
 
+  /**
+   * {@inheritDoc} Prompts the user with message and to begin a new game or
+   * exit.
+   */
   @Override
   public void gameTied(Piece piece) {
     displayPiece(piece);

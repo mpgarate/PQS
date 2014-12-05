@@ -2,6 +2,13 @@ package edu.nyu.mg3626.connectfour.model;
 
 import edu.nyu.mg3626.connectfour.player.Player;
 
+/**
+ * Representation of a piece on the connect four board. Maintains a reference to
+ * a player, row index, and column index.
+ * 
+ * @author mg3626
+ *
+ */
 public class Piece {
   private final Player player;
   private final Integer rowIndex;

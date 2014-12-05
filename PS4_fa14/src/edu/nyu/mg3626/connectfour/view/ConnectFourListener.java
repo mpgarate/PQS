@@ -2,6 +2,13 @@ package edu.nyu.mg3626.connectfour.view;
 
 import edu.nyu.mg3626.connectfour.model.Piece;
 
+/**
+ * The listener interface for the observer pattern. Events defined here are
+ * triggered by the ConnectFourModel.
+ * 
+ * @author mg3626
+ *
+ */
 public interface ConnectFourListener {
 
   /**

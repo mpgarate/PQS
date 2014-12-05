@@ -2,6 +2,12 @@ package edu.nyu.mg3626.connectfour.view.logger;
 
 import edu.nyu.mg3626.connectfour.model.Piece;
 
+/**
+ * Log events across multiple games. The log is reset when getLog() is called.
+ * 
+ * @author mg3626
+ *
+ */
 public class MultipleGameLogger implements GameLogger {
 
   MultipleGameLogger() {
@@ -35,7 +41,7 @@ public class MultipleGameLogger implements GameLogger {
   }
 
   /**
-   * Get the log as a String
+   * Get the log as a String and clear the log.
    * 
    * @return the log
    */
