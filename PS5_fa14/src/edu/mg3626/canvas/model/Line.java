@@ -30,4 +30,8 @@ public class Line {
   public int getY2() {
     return y2;
   }
+
+  public String toString() {
+    return String.format("(%d, %d) -> (%d, %d)", x1, y1, x2, y2);
+  }
 }

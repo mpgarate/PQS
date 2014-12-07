@@ -1,20 +1,14 @@
 package edu.mg3626.canvas.model;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import edu.mg3626.canvas.CanvasListener;
 
 public class CanvasModel {
 
-  private Set<Line> lines = new LinkedHashSet<Line>();
   private List<CanvasListener> listeners = new ArrayList<CanvasListener>();
-
-  public CanvasModel() {
-
-  }
+  private List<Line> lines = new ArrayList<Line>();
 
   public void addCanvasListener(CanvasListener listener) {
     listeners.add(listener);
