@@ -1,19 +1,32 @@
 package edu.mg3626.canvas.view;
 
-import edu.mg3626.canvas.CanvasListener;
 import edu.mg3626.canvas.model.Line;
 
+/**
+ * Log events received as a CanvasListener.
+ * 
+ * @author Michael Garate
+ *
+ */
 public class CanvasLogger implements CanvasListener {
 
-  StringBuilder sb = new StringBuilder();
+	StringBuilder sb = new StringBuilder();
 
-  @Override
-  public void lineAdded(Line line) {
-    sb.append("lineAdded(" + line + ")");
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void lineAdded(Line line) {
+		sb.append("lineAdded(" + line + ")");
+	}
 
-  public String toString() {
-    return sb.toString();
-  }
+	/**
+	 * Get the contents of this log.
+	 * 
+	 * @return the log contents
+	 */
+	public String toString() {
+		return sb.toString();
+	}
 
 }

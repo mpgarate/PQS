@@ -1,63 +1,70 @@
-<!-- Made using Apache Ant guide: http://ant.apache.org/manual/using.html -->
+<!-- Referenced Apache Ant guide: http://ant.apache.org/manual/using.html -->
+<!-- Also https://ant.apache.org/manual/tutorial-HelloWorldWithAnt.html -->
+
 <project name="Canvas" default="run" basedir=".">
   <description>
     Multi-window canvas app where users can paint on a canvas using the mouse.  
   </description>
 
-  <property name="src" location="src"/>
-  <property name="testsrc" location="testsrc"/>
-  <property name="build" location="build"/>
-  
-  <property name="jar-path" value="build/jar/Canvas.jar" />
-  <property name="main-class" value="edu.mg3626.canvas.CanvasApp" />
-  <property name="report.dir" value="reports" />
-  
+  <property name="src.dir" location="src" />
+  <property name="testsrc.dir" location="testsrc" />
+
+  <property name="jar.path" value="build/jar/Canvas.jar" />
+  <property name="main.app" value="edu.mg3626.canvas.CanvasApp" />
+
+  <property name="build.dir" location="build" />
+  <property name="build.jar.dir" location="build/jar" />
+  <property name="build.classes.dir" location="classes" />
+  <property name="reports.dir" value="reports" />
+
   <path id="classpath">
-    <fileset dir="lib" includes="**/*.jar"/>
+    <fileset dir="lib" includes="**/*.jar" />
   </path>
 
-	<target name="clean">
-    <delete dir="build"/>
+  <target name="clean">
+    <delete dir="${build.dir}" />
+    <delete dir="${reports.dir}" />
   </target>
 
   <target name="compile">
-    <mkdir dir="build/classes"/>
-    <javac srcdir="src" destdir="build/classes"/>
+    <mkdir dir="${build.classes.dir}" />
+    <javac srcdir="${src.dir}" destdir="${build.classes.dir}" />
   </target>
 
   <target name="jar" depends="compile">
-    <mkdir dir="build/jar"/>
-    <jar destfile="build/jar/Canvas.jar" basedir="build/classes">
+    <mkdir dir="${build.jar.dir}" />
+    <jar destfile="${jar.path}" basedir="${build.classes.dir}">
       <manifest>
-        <attribute name="Main-Class" value="${main-class}" />
+        <attribute name="Main-Class" value="${main.app}" />
       </manifest>
     </jar>
   </target>
 
   <target name="run" depends="jar">
-    <java jar="${jar-path}" fork="true"/>
+    <java jar="${jar.path}" fork="true" />
   </target>
-  
+
   <target name="test" depends="jar">
-    <mkdir dir="${report.dir}"/>
-    <javac srcdir="testsrc" destdir="build/classes" classpathref="classpath"/>
+    <mkdir dir="${reports.dir}" />
+    <javac srcdir="${testsrc.dir}" destdir="${build.classes.dir}"
+      classpathref="classpath" />
     <junit printsummary="withOutAndErr" showoutput="true">
       <classpath>
-      	<path location="build/classes" />
-        <path location="${jar-path}" />
+        <path location="${build.classes.dir}" />
+        <path location="${jar.path}" />
         <path refid="classpath" />
       </classpath>
-      <formatter type="xml"/>
-      <batchtest fork="yes" todir="${report.dir}">
-        <fileset dir="${testsrc}" includes="**/*Test.java" />
+      <formatter type="xml" />
+      <batchtest fork="yes" todir="${reports.dir}">
+        <fileset dir="${testsrc.dir}" includes="**/*Test.java" />
       </batchtest>
     </junit>
   </target>
-  
+
   <target name="junitreport">
-    <junitreport todir="${report.dir}">
-      <fileset dir="${report.dir}" includes="TEST-*.xml"/>
-      <report todir="${report.dir}"/>
+    <junitreport todir="${reports.dir}">
+      <fileset dir="${reports.dir}" includes="TEST-*.xml" />
+      <report todir="${reports.dir}" />
     </junitreport>
   </target>
 </project>
