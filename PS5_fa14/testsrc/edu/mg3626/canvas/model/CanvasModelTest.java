@@ -20,6 +20,7 @@ public class CanvasModelTest {
     Line line = new Line(new Point(0, 4), new Point(3, 0));
     model.addLine(line);
 
-    assertThat(logger.toString(), containsString("lineAdded((0, 4) -> (3, 0))"));
+    String expectedString = "lineAdded((0, 4) -> (3, 0))";
+    assertThat(logger.toString(), containsString(expectedString));
   }
 }

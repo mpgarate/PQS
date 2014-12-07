@@ -9,10 +9,10 @@ public class Line {
   private final int y2;
 
   public Line(Point p1, Point p2) {
-    this.x1 = p1.x;
-    this.y1 = p1.y;
-    this.x2 = p2.x;
-    this.y2 = p2.y;
+    this.x1 = p1.x > 0 ? p1.x : 0;
+    this.y1 = p1.y > 0 ? p1.y : 0;
+    this.x2 = p2.x > 0 ? p2.x : 0;
+    this.y2 = p2.y > 0 ? p2.y : 0;
   }
 
   public int getX1() {

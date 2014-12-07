@@ -5,6 +5,13 @@ import java.util.List;
 
 import edu.mg3626.canvas.CanvasListener;
 
+/**
+ * Representation of a canvas. Markings are recorded as lines between two points
+ * with non-negative coordinates.
+ * 
+ * @author Michael Garate
+ *
+ */
 public class CanvasModel {
 
   private List<CanvasListener> listeners = new ArrayList<CanvasListener>();
