@@ -40,9 +40,12 @@
   
   <target name="test" depends="jar">
     <mkdir dir="${report.dir}"/>
+    <javac srcdir="testsrc" destdir="build/classes" classpathref="classpath"/>
     <junit printsummary="withOutAndErr" showoutput="true">
       <classpath>
+      	<path location="build/classes" />
         <path location="${jar-path}" />
+        <path refid="classpath" />
       </classpath>
       <formatter type="xml"/>
       <batchtest fork="yes" todir="${report.dir}">
